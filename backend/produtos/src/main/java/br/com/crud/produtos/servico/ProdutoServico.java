@@ -11,7 +11,7 @@ import br.com.crud.produtos.repositorio.ProdutoRepositorio;
 public class ProdutoServico {
   @Autowired
   private ProdutoRepositorio pr;
-  
+
   @Autowired
   private RespostaModelo rm;
 
@@ -20,18 +20,21 @@ public class ProdutoServico {
 
   }
 
-  public ResponseEntity<?> cadastrar(ProdutoModelo pm) {
+  public ResponseEntity<?> cadastrarAlterar(ProdutoModelo pm, String acao) {
     if (pm.getNome().equals("")) {
       rm.setResposta("O nome do produto é obrigatório!");
       return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-
     } else if (pm.getMarca().equals("")) {
-      rm.setResposta("O nome da marca do produto é obrigratório!");
+      rm.setResposta("A marca do produto é obrigatório!");
       return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-
     } else {
-      return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.CREATED);
-    }
+      if (acao.equals("cadastrar")) {
+        return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.CREATED);
+      } else {
+        return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.OK);
 
+      }
+    }
   }
+  
 }

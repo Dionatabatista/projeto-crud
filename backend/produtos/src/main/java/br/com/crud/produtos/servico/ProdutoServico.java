@@ -3,21 +3,23 @@ package br.com.crud.produtos.servico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import br.com.crud.produtos.modelo.ProdutoModelo;
 import br.com.crud.produtos.modelo.RespostaModelo;
 import br.com.crud.produtos.repositorio.ProdutoRepositorio;
 
+@Service
 public class ProdutoServico {
-  @Autowired
+@Autowired
   private ProdutoRepositorio pr;
 
   @Autowired
   private RespostaModelo rm;
 
+  // Listar produtos
   public Iterable<ProdutoModelo> listar() {
     return pr.findAll();
-
   }
 
   public ResponseEntity<?> cadastrarAlterar(ProdutoModelo pm, String acao) {
@@ -42,5 +44,5 @@ public class ProdutoServico {
     rm.setResposta("O produto foi removido com sucesso!");
     return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
   }
-
+  
 }
